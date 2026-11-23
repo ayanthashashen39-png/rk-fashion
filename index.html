@@ -1,65 +1,381 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RK FASHION — Timeless Design. Modern Essence.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="robots" content="noindex"><title>RK FASHION Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&family=Noto+Sans+Sinhala:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css">
-</head><body>
-<div id="welcome" aria-hidden="true"><div class="d1"></div><div class="d2"></div><div class="wl"><b id="wlLogo">RK FASHION</b><i></i><span>Welcome</span><span class="si">සාදරයෙන් පිළිගනිමු</span></div></div>
-<div class="topbar"><i id="banner" style="font-style:normal">Complimentary shipping on all orders over Rs. 10,000</i><span>Ship to: Sri Lanka ⌄</span></div>
-<header>
- <button class="menu" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
- <a class="logo" id="logo" href="/">RK FASHION</a>
- <nav>
-  <a href="#" data-f="new">NEW IN</a><a href="#" data-f="women">WOMEN</a><a href="#" data-f="men">MEN</a>
-  <a href="#shop" data-f="acc">ACCESSORIES</a><a href="#shop" data-f="all">COLLECTIONS</a><a href="#">JOURNAL</a>
- </nav>
- <div class="icons">
-  <button aria-label="Search" id="searchBtn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
-  <a href="/admin/" aria-label="Account"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#1c1c1c;fill:none;stroke-width:1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
-  <button aria-label="Bag" id="bagBtn"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span class="badge" id="count">0</span></button>
+<style>
+:root{--bg:#f5f2ed;--ink:#1c1c1c;--muted:#8a857d;--line:#e0dbd2;--serif:"Cormorant Garamond",serif;--red:#a33;--green:#3f6b3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,'Noto Sans Sinhala',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}
+button{font:inherit;cursor:pointer;color:inherit}
+.si{font-size:.85em;color:var(--muted);font-weight:400}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.logo{font-family:var(--serif);font-size:26px}.logo small{font:11px Inter;letter-spacing:.1em;color:var(--muted);margin-left:10px}
+.tabs{display:flex;gap:4px;padding:0 32px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:13px 14px;font-size:12px;letter-spacing:.06em;white-space:nowrap;text-align:left;line-height:1.3}
+.tabs button .si{display:block;letter-spacing:0;font-size:10px}
+.tabs button.on{border-color:var(--ink);font-weight:500}
+.tabs b{background:var(--ink);color:#fff;border-radius:9px;font-size:10px;padding:1px 6px;margin-left:5px;font-weight:400}
+.btn{background:var(--ink);color:#fff;border:0;padding:11px 20px;font-size:11px;letter-spacing:.1em}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+.btn.sm{padding:8px 12px}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 32px 60px}
+.login{max-width:340px;margin:12vh auto;padding:0 20px;text-align:center}
+.login h1{font-family:var(--serif);font-weight:400;font-size:34px;margin-bottom:22px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);background:#fff;font:inherit;margin-bottom:12px;color:var(--ink)}
+.pwwrap{position:relative}.pwwrap input{padding-right:62px}
+.pwwrap button{position:absolute;right:6px;top:6px;height:30px;padding:0 10px;background:none;border:0;font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.pwwrap button:hover{color:var(--ink)}
+.err{color:var(--red);font-size:12px;min-height:18px;margin-bottom:8px}
+h2.t{font-family:var(--serif);font-weight:400;font-size:26px;margin-bottom:16px}
+.tools{display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap}.tools input,.tools select{margin:0;max-width:260px}.tools .sp{flex:1}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.tile{background:#fff;padding:16px 18px;border:1px solid var(--line)}
+.tile .n{font-family:var(--serif);font-size:34px;line-height:1.1}.tile .l{font-size:10px;letter-spacing:.1em;color:var(--muted);margin-top:6px}
+.tile.alert .n{color:var(--red)}
+.cols{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+.box{background:#fff;border:1px solid var(--line);padding:6px 0}.box h3{font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:500;padding:12px 16px 8px}
+.li{display:flex;justify-content:space-between;gap:10px;padding:10px 16px;border-top:1px solid var(--line);font-size:13px}
+.li:first-of-type{border-top:0}
+table{width:100%;border-collapse:collapse;background:#fff}
+th{text-align:left;font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:500;padding:12px;border-bottom:1px solid var(--line)}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+td img{width:46px;height:50px;object-fit:cover;display:block;background:#ddd}
+.pill{font-size:10px;padding:3px 8px;border:1px solid var(--line);white-space:nowrap}
+.pill.live,.pill.done,.pill.confirmed{background:#e5efe2;border-color:#cfe0ca}
+.pill.new{background:#f6e9c9;border-color:#ead7a6}.pill.shipped{background:#dde8f3;border-color:#c5d6e8}.pill.cancelled{background:#f1dcdc;border-color:#e6c4c4}
+.pill.low{background:#f1dcdc;border-color:#e6c4c4}
+td button.lk,.li button.lk{background:none;border:0;text-decoration:underline;margin-right:10px;font-size:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:30px 12px;z-index:9}
+.modal.open{display:flex}
+.panel{background:var(--bg);width:560px;max-width:100%;padding:28px}
+.panel h2{font-family:var(--serif);font-weight:400;font-size:26px;margin-bottom:18px}
+label{display:block;font-size:10px;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chk{display:flex;gap:18px;margin:4px 0 16px;flex-wrap:wrap}.chk label{display:flex;gap:6px;align-items:center;margin:0;font-size:12px;letter-spacing:0;color:var(--ink)}.chk input{width:auto;margin:0}
+.colors{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.colors span{position:relative}.colors input[type=color]{width:34px;height:34px;padding:0;margin:0;border:1px solid var(--line)}
+.colors span b{position:absolute;top:-7px;right:-6px;background:var(--ink);color:#fff;width:14px;height:14px;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:400}
+.photos{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.photos .ph{position:relative;width:84px;height:92px}.photos .ph img{width:100%;height:100%;object-fit:cover;background:#ddd}
+.photos .ph b{position:absolute;top:-6px;right:-6px;background:var(--ink);color:#fff;width:16px;height:16px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:400}
+.photos .ph i{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;font-size:9px;font-style:normal;padding:2px 5px}
+.photos label.add{width:84px;height:92px;border:1px dashed var(--muted);display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;letter-spacing:0;cursor:pointer;margin:0;color:var(--muted)}
+.photos input[type=file]{display:none}
+.hint{font-size:11px;color:var(--muted);margin:-6px 0 12px}
+.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chips button{border:1px solid var(--line);background:#fff;padding:7px 12px;font-size:11px;letter-spacing:.05em}.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.order{background:#fff;border:1px solid var(--line);padding:16px 18px;margin-bottom:12px}
+.order .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.order .meta{color:var(--muted);font-size:12px}.order .its{margin:10px 0;font-size:13px;line-height:1.7}
+.order .bt{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.order select{width:auto;margin:0;padding:8px 10px}
+.order a{font-size:12px;color:var(--ink)}
+.catrow{display:flex;align-items:center;gap:10px;padding:11px 16px;border-top:1px solid var(--line)}.catrow:first-of-type{border-top:0}.catrow span.n{flex:1}
+.set{max-width:620px}.set h3{font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:500;margin:22px 0 12px;padding-top:16px;border-top:1px solid var(--line)}.set h3:first-of-type{border:0;margin-top:0;padding:0}
+.toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;font-size:12px;z-index:30}
+.empty{color:var(--muted);padding:18px 16px;font-size:13px}
+.hide{display:none!important}
+@media(max-width:760px){.wrap{padding:18px 14px 60px}.bar,.tabs{padding-left:14px;padding-right:14px}.tiles{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.row{grid-template-columns:1fr}
+ table.pt th:nth-child(3),table.pt td:nth-child(3),table.pt th:nth-child(5),table.pt td:nth-child(5){display:none}}
+</style></head><body>
+
+<div id="login" class="login">
+ <h1>RK FASHION Admin</h1>
+ <div class="pwwrap"><input id="pw" type="password" placeholder="Password · මුරපදය" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" autofocus><button type="button" id="pwToggle" aria-label="Show password">Show</button></div>
+ <div class="err" id="loginErr"></div><div class="hint" id="capsHint" hidden style="margin:-4px 0 10px">Caps Lock is on · Caps Lock ඔන් කර ඇත</div>
+ <button class="btn" id="loginBtn" style="width:100%">SIGN IN · ඇතුල් වන්න</button>
+</div>
+
+<div id="app" class="hide">
+ <div class="bar"><div class="logo">RK FASHION<small>ADMIN</small></div>
+  <div><a href="/" target="_blank" style="margin-right:18px;font-size:12px;color:inherit">View store ↗</a><button class="btn ghost sm" id="logout">LOG OUT</button></div></div>
+ <div class="tabs" id="tabs">
+  <button data-tab="dash">DASHBOARD<span class="si">සාරාංශය</span></button>
+  <button data-tab="products">PRODUCTS<span class="si">භාණ්ඩ</span></button>
+  <button data-tab="cats">CATEGORIES<span class="si">වර්ග</span></button>
+  <button data-tab="orders">ORDERS<span class="si">ඇණවුම්</span><b id="newCount" class="hide"></b></button>
+  <button data-tab="settings">SETTINGS<span class="si">සැකසුම්</span></button>
  </div>
-</header>
-<div class="searchbar" id="searchbar" hidden><input id="sq" placeholder="Search RK FASHION… · සොයන්න" autocomplete="off"></div>
+ <div class="wrap" id="view"></div>
+</div>
 
-<section class="hero">
- <img id="heroImg" src="/assets/hero.jpg" alt="">
- <div class="copy">
-  <small id="heroEye">Spring / Summer 2024</small>
-  <h1 id="heroTitle">Timeless Design.<br>Modern Essence.</h1>
-  <p><span id="heroText">Discover effortless pieces<br>crafted for a life well-lived.</span><span class="si" id="heroSi">ජීවිතය ලස්සනට ගත කරන ඔබට, සරලව ලස්සන වන ඇඳුම්.</span></p>
-  <a class="btn dark" href="#shop" data-f="women">SHOP WOMEN</a><a class="btn light" href="#shop" data-f="men">SHOP MEN</a>
- </div>
-</section>
+<div class="modal" id="modal"><form class="panel" id="form">
+ <h2 id="mTitle">Add product</h2>
+ <label>PHOTOS · ඡායාරූප (first one is the main photo)</label>
+ <div class="photos" id="photos"></div>
+ <label>NAME · නම</label><input id="name" required maxlength="120">
+ <div class="row"><div><label>PRICE · මිල</label><input id="price" type="number" min="0" step="any" required></div>
+  <div><label>SALE PRICE (optional) · දීමනා මිල</label><input id="salePrice" type="number" min="0" step="any"></div></div>
+ <div class="row"><div><label>CATEGORY · වර්ගය</label><input id="category" list="cats" required><datalist id="cats"></datalist></div>
+  <div><label>FOR · කාටද</label><select id="gender"><option value="women">Women</option><option value="men">Men</option><option value="unisex">Unisex</option></select></div></div>
+ <div class="row"><div><label>SIZES · ප්‍රමාණ (comma separated)</label><input id="sizes" placeholder="S, M, L, XL"></div>
+  <div><label>STOCK · තොගය (empty = not tracked)</label><input id="stock" type="number" min="0" step="1"></div></div>
+ <label>DESCRIPTION · විස්තරය</label><textarea id="desc" rows="3"></textarea>
+ <label>COLOURS · වර්ණ</label><div class="colors" id="colors"></div>
+ <div class="chk"><label><input type="checkbox" id="isNew"> Mark as New · අලුත්</label><label><input type="checkbox" id="published" checked> Published · වෙබ් අඩවියේ පෙන්වන්න</label></div>
+ <div class="err" id="formErr"></div>
+ <div class="actions"><button type="button" class="btn ghost" id="cancel">CANCEL</button><button class="btn" id="save">SAVE · සේව් කරන්න</button></div>
+</form></div>
+<div class="toast hide" id="toast"></div>
 
-<main class="shop" id="shop">
- <aside class="cats"><h2>Shop by Category<span class="si">වර්ගය අනුව සොයන්න</span></h2><div id="catList"></div><button class="all" data-cat="">VIEW ALL</button></aside>
- <div class="listing"><div class="listbar"><span id="resCount"></span><label class="sortl">Sort · පිළිවෙල <select id="sort"><option value="new">Newest</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select></label></div><div class="grid" id="grid"></div></div>
-</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let token = sessionStorage.getItem("tok") || "";
+let products = [], orders = [], settings = {}, tab = "dash", orderFilter = "all", editing = null, colors = [], photos = [];
 
-<section class="perks"><div class="in">
- <div class="perk"><svg viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9z"/><path d="m3 7.5 9 4.5 9-4.5M12 12v9"/></svg><div><b>Complimentary Shipping</b><span>On all orders over Rs. 10,000<span class="si">රුපියල් 10,000ට වැඩි සියලු ඇණවුම්වලට</span></span></div></div>
- <div class="perk"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5l2 2M20 12a8 8 0 0 1-14 5l-2-2"/><path d="M20 4v5h-5M4 20v-5h5"/></svg><div><b>Easy Returns</b><span>14-day return policy<span class="si">දින 14ක් ඇතුළත ආපසු දිය හැක</span></span></div></div>
- <div class="perk"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>Secure Payments</b><span>Encrypted and protected<span class="si">ආරක්ෂිත සහ කේතනය කළ ගෙවීම්</span></span></div></div>
- <div class="perk"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1"/><rect x="17" y="14" width="4" height="6" rx="1"/></svg><div><b>Personal Shopping</b><span>Style advice, just for you<span class="si">ඔබටම ආවේණික ස්ටයිල් උපදෙස්</span></span></div></div>
-</div></section>
-<footer class="foot">
- <div class="fcols">
-  <div><b class="flogo" id="flogo">RK FASHION</b><p>Timeless pieces crafted for a life well-lived.<span class="si">ජීවිතය ලස්සනට ගත කරන ඔබට, සරලව ලස්සන වන ඇඳුම්.</span></p></div>
-  <div><h4>SHOP · සාප්පුව</h4><a href="#shop" data-f="new">New In</a><a href="#shop" data-f="women">Women</a><a href="#shop" data-f="men">Men</a><a href="#shop" data-f="all">All pieces</a></div>
-  <div><h4>CONTACT · අමතන්න</h4><a id="fWa" href="#" target="_blank" rel="noopener" hidden>WhatsApp</a><span>Sri Lanka · Island-wide delivery</span><span class="si">මුළු රටටම බෙදාහැරීම</span></div>
- </div>
- <div class="fbot">© RK FASHION. All rights reserved.<span class="credit">Developed by Shashen Ayantha</span></div>
-</footer>
+async function api(path, opts = {}) {
+  const r = await fetch(path, { ...opts, headers: { ...(opts.headers || {}), Authorization: "Bearer " + token } });
+  if (r.status === 401 && path !== "/api/login") { logout(); throw new Error("Session expired"); }
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || "Request failed");
+  return d;
+}
+const send = (path, method, body) => api(path, { method, body: JSON.stringify(body) });
+const cur = () => { const c = settings.currency || "Rs."; return c.length > 1 ? c + " " : c; };
+const money = (n) => cur() + Number(n || 0).toLocaleString("en-US");
+const fmt = (iso) => new Date(iso).toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+let tt; const toast = (m) => { const t = $("#toast"); t.textContent = m; t.classList.remove("hide"); clearTimeout(tt); tt = setTimeout(() => t.classList.add("hide"), 2200); };
 
-<aside class="drawer" id="drawer">
- <h2><span>Your Bag<span class="si">ඔබේ බෑගය</span></span> <button id="closeBag">✕</button></h2>
- <div class="items" id="items"></div>
- <div class="foot" id="foot"></div>
-</aside>
-<div class="modal" id="pm" hidden></div>
-<a id="waFab" class="fab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" hidden><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2 .9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg></a>
+function logout() { token = ""; sessionStorage.removeItem("tok"); $("#app").classList.add("hide"); $("#login").classList.remove("hide"); }
+async function start() { $("#login").classList.add("hide"); $("#app").classList.remove("hide"); await refresh(); }
+async function refresh() {
+  [products, orders, settings] = await Promise.all([api("/api/products"), api("/api/orders"), fetch("/api/settings").then((r) => r.json())]);
+  draw();
+}
 
-<script src="/store.js" charset="utf-8"></script>
-</body></html>
+$("#loginBtn").onclick = async () => {
+  $("#loginErr").textContent = "";
+  try { const d = await api("/api/login", { method: "POST", body: JSON.stringify({ password: $("#pw").value.trim() }) });
+    token = d.token; sessionStorage.setItem("tok", token); $("#pw").value = ""; start();
+  } catch (e) { $("#loginErr").textContent = e.message; $("#pw").focus(); $("#pw").select(); }
+};
+$("#pwToggle").onclick = () => { const i = $("#pw"), show = i.type === "password"; i.type = show ? "text" : "password"; $("#pwToggle").textContent = show ? "Hide" : "Show"; $("#pwToggle").setAttribute("aria-label", show ? "Hide password" : "Show password"); i.focus(); };
+$("#pw").onkeydown = (e) => { $("#capsHint").hidden = !(e.getModifierState && e.getModifierState("CapsLock")); if (e.key === "Enter") $("#loginBtn").click(); };
+$("#pw").onkeyup = (e) => { $("#capsHint").hidden = !(e.getModifierState && e.getModifierState("CapsLock")); };
+$("#logout").onclick = logout;
+$("#tabs").onclick = (e) => { const b = e.target.closest("[data-tab]"); if (b) { tab = b.dataset.tab; draw(); } };
+
+function draw() {
+  document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.tab === tab));
+  const n = orders.filter((o) => o.status === "new").length;
+  $("#newCount").textContent = n; $("#newCount").classList.toggle("hide", !n);
+  $("#view").innerHTML = { dash, products: productsView, cats: catsView, orders: ordersView, settings: settingsView }[tab]();
+  if (tab === "settings") bindSettings();
+}
+
+/* ---------- Dashboard ---------- */
+function dash() {
+  const live = products.filter((p) => p.published).length;
+  const low = products.filter((p) => p.stock !== null && p.stock !== undefined && p.stock <= 3);
+  const rev = orders.filter((o) => o.status !== "cancelled").reduce((s, o) => s + o.total, 0);
+  const nw = orders.filter((o) => o.status === "new").length;
+  return `<div class="tiles">
+   <div class="tile"><div class="n">${products.length}</div><div class="l">PRODUCTS · ${live} LIVE</div></div>
+   <div class="tile ${nw ? "alert" : ""}"><div class="n">${nw}</div><div class="l">NEW ORDERS · අලුත් ඇණවුම්</div></div>
+   <div class="tile"><div class="n">${money(rev)}</div><div class="l">ORDER VALUE (${orders.length} ORDERS)</div></div>
+   <div class="tile ${low.length ? "alert" : ""}"><div class="n">${low.length}</div><div class="l">LOW / OUT OF STOCK</div></div></div>
+   <div class="cols">
+    <div class="box"><h3>RECENT ORDERS · මෑත ඇණවුම්</h3>${orders.slice(0, 5).map((o) => `<div class="li"><span>${esc(o.name)} <span class="si">· ${fmt(o.createdAt)}</span></span><span>${money(o.total)} <span class="pill ${o.status}">${o.status.toUpperCase()}</span></span></div>`).join("") || '<div class="empty">No orders yet. · තවම ඇණවුම් නැත.</div>'}</div>
+    <div class="box"><h3>LOW STOCK · තොගය අඩු</h3>${low.map((p) => `<div class="li"><span>${esc(p.name)}</span><span class="pill low">${p.stock === 0 ? "SOLD OUT" : p.stock + " LEFT"}</span></div>`).join("") || '<div class="empty">All good. Stock is only tracked for products with a stock number.</div>'}</div>
+   </div>`;
+}
+
+/* ---------- Products ---------- */
+function productsView() {
+  return `<div class="tools"><input id="q" placeholder="Search products… · සොයන්න"><span class="sp"></span><button class="btn" id="newBtn">+ ADD PRODUCT · අලුතින් එක් කරන්න</button></div>
+   <table class="pt"><thead><tr><th></th><th>NAME</th><th>CATEGORY</th><th>PRICE</th><th>STOCK</th><th>STATUS</th><th></th></tr></thead><tbody id="rows"></tbody></table>`;
+}
+function drawRows() {
+  const q = ($("#q")?.value || "").toLowerCase();
+  $("#rows").innerHTML = products.filter((p) => (p.name + p.category).toLowerCase().includes(q)).map((p) => {
+    const sale = p.salePrice && p.salePrice < p.price;
+    const stock = p.stock === null || p.stock === undefined ? "—" : p.stock === 0 ? '<span class="pill low">OUT</span>' : p.stock;
+    return `<tr><td><img src="${esc(p.image)}" alt=""></td><td>${esc(p.name)}</td><td>${esc(p.category)}</td>
+    <td>${sale ? `<s style="color:#8a857d">${money(p.price)}</s> ${money(p.salePrice)}` : money(p.price)}</td><td>${stock}</td>
+    <td><span class="pill ${p.published ? "live" : ""}">${p.published ? "LIVE" : "HIDDEN"}</span></td>
+    <td style="white-space:nowrap"><button class="lk" data-e="${p.id}">Edit</button><button class="lk" data-d="${p.id}">Delete</button></td></tr>`;
+  }).join("") || '<tr><td colspan="7" class="empty">No products yet. · තවම භාණ්ඩ නැත.</td></tr>';
+}
+
+function drawPhotos() {
+  $("#photos").innerHTML = photos.map((u, i) => `<div class="ph"><img src="${esc(u)}" alt="">${i === 0 ? "<i>MAIN</i>" : ""}<b data-rp="${i}">×</b></div>`).join("") +
+    (photos.length < 5 ? '<label class="add" for="file">+ Photo<br>ඡායාරූපය</label>' : "") + '<input type="file" id="file" accept="image/*" multiple>';
+  $("#file").onchange = async (e) => {
+    $("#formErr").textContent = "Uploading… · උඩුගත වෙමින්…";
+    try { for (const f of [...e.target.files].slice(0, 5 - photos.length)) photos.push(await uploadImage(f)); $("#formErr").textContent = ""; drawPhotos(); }
+    catch (err) { $("#formErr").textContent = err.message; }
+  };
+}
+$("#photos").onclick = (e) => { if (e.target.dataset.rp) { photos.splice(+e.target.dataset.rp, 1); drawPhotos(); } };
+
+function drawColors() {
+  $("#colors").innerHTML = colors.map((c, i) => `<span><input type="color" value="${esc(c)}" data-i="${i}"><b data-x="${i}">×</b></span>`).join("") + '<button type="button" class="btn ghost" id="addColor" style="padding:9px 12px">+ COLOUR</button>';
+}
+$("#colors").onclick = (e) => { if (e.target.id === "addColor") { colors.push("#1c1c1c"); drawColors(); } if (e.target.dataset.x) { colors.splice(+e.target.dataset.x, 1); drawColors(); } };
+$("#colors").oninput = (e) => { if (e.target.dataset.i) colors[+e.target.dataset.i] = e.target.value; };
+
+function openForm(p) {
+  editing = p || null;
+  $("#mTitle").textContent = p ? "Edit product" : "Add product";
+  $("#name").value = p?.name || ""; $("#price").value = p?.price ?? ""; $("#salePrice").value = p?.salePrice ?? "";
+  $("#category").value = p?.category || ""; $("#gender").value = p?.gender || "women";
+  $("#sizes").value = (p?.sizes || []).join(", "); $("#stock").value = p?.stock ?? "";
+  $("#desc").value = p?.description || ""; $("#isNew").checked = !!p?.isNew; $("#published").checked = p ? p.published !== false : true;
+  colors = [...(p?.colors || [])]; photos = [...(p?.images?.length ? p.images : p?.image ? [p.image] : [])];
+  $("#formErr").textContent = ""; drawColors(); drawPhotos();
+  $("#cats").innerHTML = [...new Set([...(settings.categories || []), ...products.map((x) => x.category)])].map((c) => `<option value="${esc(c)}">`).join("");
+  $("#modal").classList.add("open");
+}
+$("#cancel").onclick = () => $("#modal").classList.remove("open");
+
+function resize(file) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 1000 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = img.width * s; c.height = img.height * s;
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob((b) => (b ? res(b) : rej(new Error("Could not read image"))), "image/jpeg", 0.85);
+    };
+    img.onerror = () => rej(new Error("Could not read image"));
+    img.src = URL.createObjectURL(file);
+  });
+}
+async function uploadImage(file) {
+  const blob = await resize(file);
+  return (await api("/api/image", { method: "POST", headers: { "Content-Type": "image/jpeg" }, body: blob })).url;
+}
+$("#form").onsubmit = async (e) => {
+  e.preventDefault();
+  if (!photos.length) return ($("#formErr").textContent = "Please add at least one photo. · කරුණාකර ඡායාරූපයක් එක් කරන්න.");
+  const body = { name: $("#name").value.trim(), price: $("#price").value, salePrice: $("#salePrice").value, category: $("#category").value.trim(),
+    gender: $("#gender").value, sizes: $("#sizes").value.split(",").map((s) => s.trim()).filter(Boolean), stock: $("#stock").value,
+    description: $("#desc").value, colors, images: photos, image: photos[0], isNew: $("#isNew").checked, published: $("#published").checked };
+  try {
+    await send(editing ? "/api/products/" + editing.id : "/api/products", editing ? "PUT" : "POST", body);
+    $("#modal").classList.remove("open"); toast("Saved · සේව් වුණා"); await refresh();
+  } catch (err) { $("#formErr").textContent = err.message; }
+};
+
+/* ---------- Categories ---------- */
+function catsView() {
+  const list = settings.categories || [];
+  const count = (c) => products.filter((p) => p.category === c).length;
+  const extra = [...new Set(products.map((p) => p.category))].filter((c) => !list.includes(c));
+  return `<h2 class="t">Categories <span class="si">වර්ග</span></h2>
+   <div class="tools"><input id="newCat" placeholder="New category · අලුත් වර්ගයක්"><button class="btn" id="addCat">ADD</button></div>
+   <div class="box">${list.map((c, i) => `<div class="catrow"><span class="n">${esc(c)} <span class="si">· ${count(c)} products</span></span>
+     <button class="btn ghost sm" data-cu="${i}" ${i === 0 ? "disabled" : ""}>↑</button><button class="btn ghost sm" data-cd="${i}" ${i === list.length - 1 ? "disabled" : ""}>↓</button>
+     <button class="btn ghost sm" data-cx="${i}" ${count(c) ? 'disabled title="Move its products first"' : ""}>Delete</button></div>`).join("") || '<div class="empty">No categories yet.</div>'}</div>
+   ${extra.length ? `<p class="hint" style="margin-top:14px">Used by products but not in the list above: ${extra.map(esc).join(", ")}. <button class="lk" data-adopt="1" style="background:none;border:0;text-decoration:underline">Add them</button></p>` : ""}
+   <p class="hint" style="margin-top:14px">The order here is the order shown in the store's "Shop by Category". · ස්ටෝර් එකේ පෙන්වන පිළිවෙල මෙයයි.</p>`;
+}
+async function saveCats(list) { settings = await send("/api/settings", "PUT", { ...settings, categories: list }); toast("Saved · සේව් වුණා"); draw(); }
+
+/* ---------- Orders ---------- */
+const waNum = (ph) => { const d = String(ph).replace(/\D/g, ""); return d.startsWith("0") ? "94" + d.slice(1) : d; };
+function waCustomer(o) {
+  const shop = settings.logo || "RK FASHION", id = o.id.slice(-6);
+  const items = o.items.map((i) => `${i.qty} × ${i.name}${i.size ? " (" + i.size + ")" : ""}`).join(", ");
+  const say = {
+    new: `Hi ${o.name}, we received your order #${id} at ${shop}: ${items}. Total ${money(o.total)}.`,
+    confirmed: `Hi ${o.name}, your order #${id} at ${shop} is confirmed: ${items}. Total ${money(o.total)}. Thank you!`,
+    shipped: `Hi ${o.name}, your order #${id} from ${shop} has been shipped. Total ${money(o.total)}.`,
+    done: `Hi ${o.name}, thank you for shopping with ${shop}! Order #${id} is complete.`,
+    cancelled: `Hi ${o.name}, your order #${id} at ${shop} has been cancelled. Please contact us if you have any questions.`,
+  }[o.status];
+  return `https://wa.me/${waNum(o.phone)}?text=${encodeURIComponent(say)}`;
+}
+const STATUS = ["new", "confirmed", "shipped", "done", "cancelled"];
+function ordersView() {
+  const list = orders.filter((o) => orderFilter === "all" || o.status === orderFilter);
+  const chip = (s, l) => `<button data-of="${s}" class="${orderFilter === s ? "on" : ""}">${l}${s === "all" ? "" : " " + orders.filter((o) => o.status === s).length}</button>`;
+  return `<h2 class="t">Orders <span class="si">ඇණවුම්</span></h2>
+   <div class="chips" style="margin-bottom:16px">${chip("all", "ALL " + orders.length)}${STATUS.map((s) => chip(s, s.toUpperCase())).join("")}</div>
+   ${list.map((o) => `<div class="order"><div class="top"><b>${esc(o.name)} <span class="si">· #${esc(o.id.slice(-6))}</span></b><span class="meta">${fmt(o.createdAt)}</span></div>
+    <div class="meta">${esc(o.phone)}${o.address ? " · " + esc(o.address) : ""}</div>
+    <div class="its">${o.items.map((i) => `${i.qty} × ${esc(i.name)}${i.size ? " (" + esc(i.size) + ")" : ""} — ${money(i.price * i.qty)}`).join("<br>")}</div>
+    ${o.note ? `<div class="meta" style="margin-bottom:10px">Note: ${esc(o.note)}</div>` : ""}
+    <div class="bt"><b>${money(o.total)}</b>
+     <select data-os="${esc(o.id)}">${STATUS.map((s) => `<option value="${s}" ${o.status === s ? "selected" : ""}>${s.toUpperCase()}</option>`).join("")}</select>
+     <a target="_blank" rel="noopener" href="${waCustomer(o)}">WhatsApp customer · පාරිභෝගිකයාට පණිවිඩය</a>
+     <button class="lk" data-od="${esc(o.id)}" style="background:none;border:0;text-decoration:underline;font-size:12px;margin-left:auto">Delete</button></div></div>`).join("") || '<div class="empty">No orders here. · ඇණවුම් නැත.</div>'}`;
+}
+
+/* ---------- Settings ---------- */
+function settingsView() {
+  const s = settings;
+  const f = (id, label, val, tag = "input", extra = "") => `<label>${label}</label>${tag === "textarea" ? `<textarea id="${id}" rows="2">${esc(val)}</textarea>` : `<input id="${id}" value="${esc(val)}" ${extra}>`}`;
+  return `<div class="set"><h2 class="t">Site settings <span class="si">වෙබ් අඩවි සැකසුම්</span></h2>
+   <h3>BRAND · වෙළඳ නාමය</h3>${f("sLogo", "LOGO TEXT", s.logo)}${f("sBanner", "TOP BANNER MESSAGE · ඉහළ පණිවිඩය", s.banner)}
+   <div class="row"><div>${f("sCur", "CURRENCY (e.g. Rs.) · මුදල් සංකේතය", s.currency, "input", 'maxlength="4"')}</div><div>${f("sWa", "WHATSAPP NUMBER FOR ORDERS (country code, no +, e.g. 94753653318) · ඇණවුම් එන අංකය", s.whatsapp)}</div></div>
+   <h3>HOME PAGE BANNER · මුල් පිටුවේ බැනරය</h3>
+   ${f("sEye", "SMALL TEXT ABOVE TITLE", s.heroEyebrow)}${f("sTitle", "TITLE (use a new line for the 2nd line)", s.heroTitle, "textarea")}${f("sText", "DESCRIPTION", s.heroText, "textarea")}${f("sSi", "SINHALA LINE · සිංහල පේළිය", s.heroTextSi, "textarea")}
+   <label>BANNER PHOTO · ඡායාරූපය</label><div class="photos"><div class="ph" style="width:150px"><img id="heroPrev" src="${esc(s.heroImage)}" alt=""></div><label class="add" for="heroFile" style="width:110px">Change photo<br>වෙනස් කරන්න</label><input type="file" id="heroFile" accept="image/*"></div>
+   <div class="err" id="setErr"></div><button class="btn" id="saveSet">SAVE SETTINGS · සේව් කරන්න</button>
+   <h3>CHANGE PASSWORD · මුරපදය වෙනස් කරන්න</h3>
+   <label>CURRENT PASSWORD · දැනට ඇති මුරපදය</label><input id="pwCur" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+   <label>NEW PASSWORD (at least 8 characters) · අලුත් මුරපදය</label><input id="pwNew" type="password" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+   <label>NEW PASSWORD AGAIN · නැවත ඇතුළත් කරන්න</label><input id="pwNew2" type="password" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+   <div class="chk"><label><input type="checkbox" id="pwShow"> Show passwords · මුරපද පෙන්වන්න</label></div>
+   <div class="err" id="pwMsg"></div><button class="btn ghost" id="pwSave">CHANGE PASSWORD</button></div>`;
+}
+function bindSettings() {
+  $("#heroFile").onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    $("#setErr").textContent = "Uploading… · උඩුගත වෙමින්…";
+    try { settings.heroImage = await uploadImage(f); $("#heroPrev").src = settings.heroImage; $("#setErr").textContent = "Photo uploaded. Press Save to publish it."; }
+    catch (err) { $("#setErr").textContent = err.message; }
+  };
+  $("#pwShow").onchange = (e) => ["#pwCur", "#pwNew", "#pwNew2"].forEach((s) => ($(s).type = e.target.checked ? "text" : "password"));
+  $("#pwSave").onclick = async () => {
+    const msg = (m, ok) => { $("#pwMsg").textContent = m; $("#pwMsg").style.color = ok ? "var(--green)" : ""; };
+    const cur = $("#pwCur").value, nw = $("#pwNew").value.trim(), nw2 = $("#pwNew2").value.trim();
+    if (!cur || !nw) return msg("Fill in all the boxes · සියලු කොටු පුරවන්න");
+    if (nw.length < 8) return msg("New password must be at least 8 characters · අවම වශයෙන් අකුරු 8ක් ඕන");
+    if (nw !== nw2) return msg("The two new passwords do not match · අලුත් මුරපද දෙක ගැළපෙන්නේ නැහැ");
+    try {
+      const d = await send("/api/password", "POST", { current: cur, next: nw });
+      token = d.token; sessionStorage.setItem("tok", token);
+      ["#pwCur", "#pwNew", "#pwNew2"].forEach((s) => ($(s).value = ""));
+      msg("Password changed. Use the new one next time. · මුරපදය වෙනස් කළා.", true); toast("Password changed · වෙනස් කළා");
+    } catch (err) { msg(err.message); }
+  };
+  $("#saveSet").onclick = async () => {
+    try {
+      settings = await send("/api/settings", "PUT", { ...settings, logo: $("#sLogo").value, banner: $("#sBanner").value, currency: $("#sCur").value,
+        whatsapp: $("#sWa").value, heroEyebrow: $("#sEye").value, heroTitle: $("#sTitle").value, heroText: $("#sText").value, heroTextSi: $("#sSi").value });
+      toast("Saved · සේව් වුණා"); $("#setErr").textContent = "";
+    } catch (err) { $("#setErr").textContent = err.message; }
+  };
+}
+
+/* ---------- shared click / input handling ---------- */
+$("#view").addEventListener("input", (e) => { if (e.target.id === "q") drawRows(); });
+$("#view").addEventListener("change", async (e) => {
+  if (e.target.dataset.os) { try { await send("/api/orders/" + e.target.dataset.os, "PUT", { status: e.target.value }); toast("Status updated · යාවත්කාලීන කළා"); await refresh(); } catch (err) { toast(err.message); } }
+});
+$("#view").addEventListener("click", async (e) => {
+  const b = e.target.closest("button"); if (!b) return; const d = b.dataset;
+  try {
+    if (b.id === "newBtn") openForm();
+    else if (d.e) openForm(products.find((p) => p.id === d.e));
+    else if (d.d) {
+      if (!b.dataset.armed) { b.dataset.armed = "1"; b.textContent = "Sure?"; setTimeout(() => { b.dataset.armed = ""; b.textContent = "Delete"; }, 2500); return; }
+      await api("/api/products/" + d.d, { method: "DELETE" }); toast("Deleted"); await refresh();
+    }
+    else if (b.id === "addCat") { const v = $("#newCat").value.trim(); if (v) await saveCats([...(settings.categories || []), v]); }
+    else if (d.cu !== undefined || d.cd !== undefined) { const l = [...settings.categories], i = +(d.cu ?? d.cd), j = d.cu !== undefined ? i - 1 : i + 1; [l[i], l[j]] = [l[j], l[i]]; await saveCats(l); }
+    else if (d.cx !== undefined) { const l = [...settings.categories]; l.splice(+d.cx, 1); await saveCats(l); }
+    else if (d.adopt) await saveCats([...new Set([...(settings.categories || []), ...products.map((p) => p.category)])]);
+    else if (d.of) { orderFilter = d.of; draw(); }
+    else if (d.od) {
+      if (!b.dataset.armed) { b.dataset.armed = "1"; b.textContent = "Sure?"; setTimeout(() => { b.dataset.armed = ""; b.textContent = "Delete"; }, 2500); return; }
+      await api("/api/orders/" + d.od, { method: "DELETE" }); await refresh();
+    }
+  } catch (err) { toast(err.message); }
+});
+const origDraw = draw; draw = function () { origDraw(); if (tab === "products") drawRows(); };
+if (token) start().catch(() => {});
+</script></body></html>
